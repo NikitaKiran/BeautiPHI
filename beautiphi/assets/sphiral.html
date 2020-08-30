@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<body>
+<body style="background-color:#c6f2b0;"></body>
+<p>This is a spiral formed by making arcs in squares whose sides are the fibonnaci numbers.<br>
+    <button type="button" onclick="draw()"> Draw!</button> </p>
+<canvas id="mycanvas" width="350" height="500" style="border:1px solid #d3d3d3;"> </canvas>
+<script>
+        const canvas = document.getElementById('mycanvas');
+        const ctx = canvas.getContext('2d');
+        var ppfn = 5; var pfn = ppfn;var px=400; var py=350-ppfn; var fn=0; var cy=0; var cx=0; var i = 0
+        var afn = 0; var apfn = 1; var appfn = 1; var lw = 0; var cr = 0; var cg = 0; var cb = 0; var tf = 0
+        ctx.font='bold 10px Arial';
+        var heightt=ctx.measureText('M').width;
+        ctx.font = "italic 10pt Arial";
+
+
+        function draw() {
+            if (tf == 0){
+                ctx.clearRect(0,0,canvas.width,canvas.height)
+                ppfn = 5; pfn = ppfn; px=105;  py=350-ppfn;  fn=0;  cy=0;  cx=0;  i = 0
+                afn = 0; apfn = 1;  appfn = 1; lw = 0;  cr = 0;  cg = 0;  cb = 0
+                cr = Math.floor(Math.random() * 256)
+                cg = Math.floor(Math.random() * 256)
+                cb = Math.floor(Math.random() * 256)
+                console.log("draw()",cr,cg,cb)
+                dr(px - (ppfn/2),py+(ppfn/2), ppfn, ppfn)
+                da(px-(ppfn/2), py+(ppfn/2), ppfn, 0, Math.PI/2)
+                dr(px - (pfn/2),py-(pfn/2), pfn, pfn)
+                da(px-(ppfn/2), py+(pfn/2), pfn, (3 * Math.PI)/2, 2*Math.PI)
+                tf=1
+                phi=setInterval(spi,500)
+            }
+        }
+
+        function dr(x,y,w,h){
+            ctx.strokeStyle='grey'
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.rect(x,y, w, h)
+            ctx.stroke()
+
+        }
+        function da(xp,yp,r,sa,ea){
+            ctx.lineWidth = lw
+            ctx.strokeStyle = "rgba(" + (cr*1.6)%256 + "," + (cg*1.6)%256 + "," +  (cb*1.6)%256 + ")"
+            ctx.beginPath();
+            ctx.arc(xp, yp, r, sa, ea);
+            ctx.stroke();
+        }
+        function spi(){
+            console.log("rgba(" + (cr*1.6)%256 + "," + (cg*1.6)%256 + "," +  (cb*1.6)%256 + ")")
+            //console.log((cr*1.6)%256,(cg*1.6)%256,(cb*1.6)%256)
+            //console.log(cr,cg,cb)
+            fn = pfn+ppfn
+            afn = apfn + appfn
+            lw = lw+(afn/apfn)
+            cr=(cr*1.6)%256//cr+40
+            cg=(cg*1.6)%256//cg+40
+            cb=(cb*1.6)%256//cb+40
+            //console.log(cr,cg,cb)
+            if ((i % 4) == 0){
+                cy=py+(ppfn/2)
+                cx=px-((fn+pfn)/2)
+                dr(cx - (fn/2),cy - (fn/2), fn, fn)
+                da(cx+(fn/2), cy+(fn/2), fn, Math.PI, (3 * Math.PI)/2)
+            }
+            else if ((i % 4) == 1){
+                cx=px+(ppfn/2)
+                cy=py+((fn+pfn)/2)
+                dr(cx - (fn/2),cy - (fn/2), fn, fn)
+                da(cx+(fn/2), cy-(fn/2), fn, Math.PI/2, Math.PI)
+            }
+            else if ((i % 4) == 2){
+                cy=py-(ppfn/2)
+                cx=px+((fn+pfn)/2)
+                dr(cx - (fn/2),cy - (fn/2), fn, fn)
+                da(cx-(fn/2), cy-(fn/2), fn, 0, Math.PI/2)
+            }
+            else{
+                cx=px-(ppfn/2)
+                cy=py-((fn+pfn)/2)
+                dr(cx - (fn/2),cy - (fn/2), fn, fn)
+                da(cx-(fn/2), cy+(fn/2), fn,  (3*Math.PI)/2, 2*Math.PI)
+            }
+            console.log(afn)
+            //sqc(fn,cx,cy)
+            ctx.fillText(afn,cx-((ctx.measureText(afn).width)/2),cy+(heightt/2))
+            px = cx
+            py = cy
+            ppfn = pfn
+            pfn = fn
+            appfn = apfn
+            apfn = afn
+            if (i == 7){
+                tf = 0
+                clearInterval(phi)
+            }
+            i=i+1
+
+        }
+
+    </script>
+</body>
+</html>
+
+
+
+
+

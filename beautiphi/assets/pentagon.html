@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<body style="background-color:#c6f2b0;"></body>
+<head>
+    <style>
+
+            h1 {
+                background-color: #d65a25;
+                color:#ffff80;
+
+            }
+            table {
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            th, td {
+                text-align: left;
+                padding: 8px;
+            }
+
+            tr:nth-child(even){background-color: #e8fcfd}
+            tr:nth-child(odd){background-color: #caf9fb}
+
+            th {
+                background-color: #eb1555;
+                color:#ffffff;
+            }
+
+            </style>
+</head>
+<body>
+<p>Regular pentagons have a unique property: the ratio of their diagonal to side is the value of phi.
+    Choose side length (value between 10 to 100):<br>
+    <input type="range" min="10" max="100" value="80" step ="10" id='slider'>
+    <span id="demo"></span><br>
+    <button type="button" onclick="drawpentagon()">Draw</button> <button type="button" onclick="refresh()">Reset</button></p>
+<canvas id="mycanvas" width="400" height="400" style = "border:1px solid #d3d3d3"> </canvas><br>
+<table id="phi" style="width:50%">
+    <thead>
+    <tr>
+        <th>side</th>
+        <th>diagonal</th>
+        <th>diagonal/side</th>
+    </tr>
+    </thead>
+</table>
+<script>
+        const canvas = document.getElementById('mycanvas');
+        const ctx = canvas.getContext('2d');
+        ctx.font = "12px Arial";
+
+        var slider = document.getElementById("slider");
+        var output = document.getElementById("demo");
+        output.innerHTML = slider.value;
+
+        slider.oninput = function() {
+            output.innerHTML = this.value;
+        }
+
+        var i = 0; var x = 0; var y = 0; var side=0; var radius=0
+        var xvertices=[]; var yvertices=[]; var allx=[]; var ally=[]
+        const SIDES = 5; const CX=170; const CY=200; const SPEED=750
+        const a = ((Math.PI * 2)/SIDES);  var ratio = 0;
+        var drawpent; var c = 1;  var d = 0; var tf=0; var map1 = new Map()
+        var myHtmlContent = ''; var tableRef = ''; var newRow = ''
+        slider.oninput = function() {
+            output.innerHTML = this.value;
+        }
+
+        function refresh(){
+            if (tf==0){
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                i = 0; allx = []; ally = [];
+                console.log("refresh", c)
+                for (var k = 1; k<c; k++){
+                    document.getElementById('phi').deleteRow(1)
+                }
+                c = 1
+                map1.clear()
+            }
+        }
+
+        function drawsidepent() {
+            i = i + 1
+            if (i <= SIDES) {
+                x = radius*Math.cos(a*i)
+                y = radius*Math.sin(a*i)
+                console.log("\tside", i)
+                ctx.lineTo(CX+x,CY+y);
+                ctx.stroke()
+                xvertices[i-1] = CX+x
+                yvertices[i-1] = CY+y
+            } else if (i==(SIDES+2)) {
+                console.log('Take that')
+
+                if (map1.has(side)!=true){
+                    allx[c-1]=xvertices
+                    ally[c-1]=yvertices
+                    map1.set(side,0)
+                    ratio = d/side
+                    myHtmlContent = "<tr><td>" + side.toString() + "</td><td>" + d.toFixed(2).toString() + "</td><td>" + ratio.toFixed(5).toString() + "  =  phi" + "</td></tr>"
+                    tableRef = document.getElementById('phi');//.getElementsByTagName('tbody')[0];
+                    newRow = tableRef.insertRow(tableRef.rows.length);
+                    newRow.innerHTML = myHtmlContent;
+                    c = c + 1
+                }
+                tf = 0
+                ctx.closePath()
+                clearInterval(drawpent)
+            } else if (i==(SIDES+1)){
+                var ran=Math.floor(Math.random() * 5)
+                ctx.moveTo(xvertices[ran],yvertices[ran])
+                var oran=Math.floor(Math.random() * 2)
+                ctx.lineTo(xvertices[(ran+2+oran)%5],yvertices[(ran+2+oran)%5])
+                ctx.stroke()
+                d = 2*(Math.cos(Math.PI/5)*side)
+                ctx.fillText(d.toFixed(2),(xvertices[ran]+xvertices[(ran+2+oran)%5])/2,(yvertices[ran]+yvertices[(ran+2+oran)%5])/2)
+                ctx.fillText(side,(xvertices[0]+xvertices[1])/2,(yvertices[0]+yvertices[1])/2)
+            }
+        }
+
+        function draweasypent(xl,yl){
+            console.log('draweasypent', c)
+            ctx.beginPath()
+            ctx.strokeStyle='#808080'
+            ctx.moveTo(xl[4],yl[4])
+            for (var z = 1; z <= SIDES; z++){
+                ctx.lineTo(xl[z-1],yl[z-1])
+            }
+            ctx.closePath()
+            ctx.stroke()
+            ctx.strokeStyle='#000000'
+        }
+
+        function drawpentagon() {
+            if (tf==0){
+                side = document.getElementById("slider").value
+                tf = 1
+                console.log("Drawing pentagon", c)
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                radius = side/Math.sin(Math.PI/SIDES)
+                xvertices = []
+                yvertices=[]
+                i = 0
+                if (c > 1) {
+                    for (var value=0;value< allx.length;value++){
+                        console.log("draweasypent", c)
+                        draweasypent(allx[value],ally[value])
+                    }
+                }
+                ctx.beginPath()
+                ctx.moveTo(radius+CX,CY)
+                drawpent = setInterval(drawsidepent,SPEED)
+            }
+        }
+    </script>
+</body>
+</html>

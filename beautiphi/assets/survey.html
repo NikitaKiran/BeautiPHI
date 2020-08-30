@@ -1,0 +1,212 @@
+<!-- survey page in html -->
+
+<html>
+<head>
+    <script>
+            var num = 123
+
+            var rectangles = [
+                {index: 0, clicks: 1},
+                {index: 1, clicks: 1},
+                {index: 2, clicks: 1},
+                {index: 3, clicks: 1}
+            ];
+
+            var faces = [
+                {index: 0, clicks: 1},
+                {index: 0, clicks: 1},
+                {index: 0, clicks: 1},
+                {index: 0, clicks: 1}
+            ];
+
+            var other = [
+                {index: 0, clicks: 1},
+                {index: 0, clicks: 1},
+                {index: 0, clicks: 1},
+                {index: 0, clicks: 1}
+            ]
+
+            var survey = [
+                this.rectangles,
+                this.faces,
+                this.other
+            ]
+
+            function back(){
+                this.navctrl.back();
+            }
+
+            function up1(ind1, ind2){
+                this.survey[ind1][ind2].clicks += 1;
+                this.num += 1;
+                console.log(survey[ind1][ind2].clicks);
+            }
+
+            function up(ind1, ind2, id){
+                this.survey[ind1][ind2].clicks += 1;
+                document.getElementById(id).innerHTML = this.survey[ind1][ind2].clicks;
+                console.log(survey[ind1][ind2].clicks);
+            }
+        </script>
+</head>
+<body style="background-color: #c6f2b0">
+<h1 align="center">
+    <strong><u>
+        SURVEY
+    </strong></u>
+</h1>
+<style>
+        .grid-container {
+            display: grid;
+            grid-template-columns: auto;
+            background-color: #0d1b25;
+            padding: 10px;
+        }
+
+        .grid-item {
+            background-color: rgb(67, 110, 67);
+            border: 1px solid rgba(0, 0, 0, 0.8);
+            padding: 10px;
+            font-size: 30px;
+            text-align: center;
+        }
+
+        label {
+            -webkit-perspective: 1000px;
+            perspective: 1000px;
+            -webkit-transform-style: preserve-3d;
+            transform-style: preserve-3d;
+            display: block;
+            width: 300px;
+            height: 200px;
+            position: relative;
+            left: 50%;
+            top: 50%;
+            -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+        }
+
+        .card {
+            position: relative;
+            height: 100%;
+            width: 100%;
+            -webkit-transform-style: preserve-3d;
+            transform-style: preserve-3d;
+            -webkit-transition: all 600ms;
+            transition: all 600ms;
+            z-index: 20;
+        }
+
+        .card div {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            background: transparent;
+            text-align: center;
+            line-height: 200px;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 2px;
+        }
+
+        .card .back {
+            background: #222;
+            color: gold;
+            -webkit-transform: rotateX(180deg);
+            transform: rotateX(180deg);
+            position: relative;
+            top: 0;
+        }
+
+        label:hover .card {
+            -webkit-transform: rotateX(20deg);
+            transform: rotateX(20deg);
+            box-shadow: 0 20px 20px rgba(50,50,50,.2);
+        }
+
+        input {
+            display: none;
+        }
+
+        :checked + .card {
+            transform: rotateX(180deg);
+            -webkit-transform: rotateX(180deg);
+        }
+
+        label:hover :checked + .card {
+            transform: rotateX(160deg);
+            -webkit-transform: rotateX(160deg);
+            box-shadow: 0 20px 20px rgba(255,255,255,.2);
+        }
+    </style>
+<p>
+    Time to test all the theories surrounding phi. To find out if phi really does govern
+    how appealing something is, we have for you a small survey.
+    Of the given options, click on the one which appeals to you the most
+   and find out how many other people selected the same option.
+    Will you phind the one whose dimensions are in golden ratio?
+</p>
+<h1 align="center">Images</h1>
+
+<div class="grid-container">
+    <div class="grid-item">
+        <label>
+            <input type="checkbox"  />
+            <div class="card">
+                <div class="front" onclick="up(1, 0, '1,0')">
+                    <img src="golden_rect.JPG">
+                </div>
+                <div class="back">
+                    <span id="1,0"></span>
+                    selected Golden
+                </div>
+            </div>
+        </label>
+    </div>
+    <div class="grid-item">
+        <label>
+            <input type="checkbox"  />
+            <div class="card">
+                <div class="front"  onclick="up(1, 1, '1,1')">
+                    <img src="rect_3.JPG">
+                </div>
+                <div class="back">
+                    <span id="1,1"></span>
+                    votes
+                </div>
+            </div>
+        </label>
+    </div>
+    <div class="grid-item">
+        <label>
+            <input type="checkbox"  />
+            <div class="card">
+                <div class="front" onclick="up(1, 2, '1,2')">
+                    <img src="rect_2.JPG">
+                </div>
+                <div class="back">
+                    <span id="1,2"></span>
+                    votes
+                </div>
+            </div>
+        </label>
+    </div>
+    <div class="grid-item">
+        <label>
+            <input type="checkbox"  />
+            <div class="card">
+                <div class="front" onclick="up(1, 3, '1,3')">
+                    <img src="rect_4.JPG">
+                </div>
+                <div class="back">
+                    <span id="1,3"></span>
+                    votes
+                </div>
+            </div>
+        </label>
+    </div>
+</div>
+
+</body>
+</html>
