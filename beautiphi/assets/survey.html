@@ -2,7 +2,49 @@
 
 <html>
 <head>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+         https://firebase.google.com/docs/web/setup#available-libraries -->
     <script>
+        // var firebaseConfig = {
+        //     apiKey: "AIzaSyCUTW7zeuULD_9OMfQwZNb6TbYJE6zzEZo",
+        //     authDomain: "votes-c498f.firebaseapp.com",
+        //     databaseURL: "https://votes-c498f.firebaseio.com",
+        //     projectId: "votes-c498f",
+        //     storageBucket: "votes-c498f.appspot.com",
+        //     messagingSenderId: "89742268518",
+        //     appId: "1:89742268518:web:939465b245248a1a7935a7"
+        // };
+        // // Initialize Firebase
+        // firebase.initializeApp(firebaseConfig);
+
+
+        var firebaseConfig = {
+            apiKey: "AIzaSyCUTW7zeuULD_9OMfQwZNb6TbYJE6zzEZo",
+            authDomain: "votes-c498f.firebaseapp.com",
+            databaseURL: "https://votes-c498f.firebaseio.com",
+            projectId: "votes-c498f",
+            storageBucket: "votes-c498f.appspot.com",
+            messagingSenderId: "89742268518",
+            appId: "1:89742268518:web:939465b245248a1a7935a7"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+            function up(ind1, ind2, id){
+                var t = '/votes/' + ind2;
+                firebase.database().ref(t).once('value').then(function(snapshot) {
+                    var tval = snapshot.val() + 1;
+                    console.log(t, tval)
+                    document.getElementById(id).innerHTML = tval;
+                    var updates = {};
+                    updates[t] = tval;
+                    firebase.database().ref().update(updates);
+                });
+            }
+
             var num = 123
 
             var rectangles = [
@@ -34,18 +76,6 @@
 
             function back(){
                 this.navctrl.back();
-            }
-
-            function up1(ind1, ind2){
-                this.survey[ind1][ind2].clicks += 1;
-                this.num += 1;
-                console.log(survey[ind1][ind2].clicks);
-            }
-
-            function up(ind1, ind2, id){
-                this.survey[ind1][ind2].clicks += 1;
-                document.getElementById(id).innerHTML = this.survey[ind1][ind2].clicks;
-                console.log(survey[ind1][ind2].clicks);
             }
         </script>
 </head>
@@ -140,11 +170,13 @@
             box-shadow: 0 20px 20px rgba(255,255,255,.2);
         }
     </style>
+
+
 <p>
     Time to test all the theories surrounding phi. To find out if phi really does govern
     how appealing something is, we have for you a small survey.
     Of the given options, click on the one which appeals to you the most
-   and find out how many other people selected the same option.
+    and find out how many other people selected the same option.
     Will you phind the one whose dimensions are in golden ratio?
 </p>
 <h1 align="center">Images</h1>
@@ -154,7 +186,7 @@
         <label>
             <input type="checkbox"  />
             <div class="card">
-                <div class="front" onclick="up(1, 0, '1,0')">
+                <div class="front" onclick="up(1, 1, '1,0')">
                     <img src="golden_rect.JPG">
                 </div>
                 <div class="back">
@@ -168,7 +200,7 @@
         <label>
             <input type="checkbox"  />
             <div class="card">
-                <div class="front"  onclick="up(1, 1, '1,1')">
+                <div class="front"  onclick="up(1, 2, '1,1')">
                     <img src="rect_3.JPG">
                 </div>
                 <div class="back">
@@ -182,7 +214,7 @@
         <label>
             <input type="checkbox"  />
             <div class="card">
-                <div class="front" onclick="up(1, 2, '1,2')">
+                <div class="front" onclick="up(1, 3, '1,2')">
                     <img src="rect_2.JPG">
                 </div>
                 <div class="back">
@@ -196,7 +228,7 @@
         <label>
             <input type="checkbox"  />
             <div class="card">
-                <div class="front" onclick="up(1, 3, '1,3')">
+                <div class="front" onclick="up(1, 4, '1,3')">
                     <img src="rect_4.JPG">
                 </div>
                 <div class="back">
