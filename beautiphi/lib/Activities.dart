@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import './FirstScreen.dart';
 import './sphiral.dart';
 import './survey.dart';
+import './Trick.dart';
 
 class Activities extends StatefulWidget {
   @override
@@ -16,6 +17,7 @@ class _ActivitiesState extends State<Activities> {
         'int': (context) => FirstScreen(),
         'sphiral': (context) => sphiral(),
         'survey': (context) => survey(),
+        'trick': (context) => Trick(),
       },
       home: Scaffold(
         backgroundColor: Color(0xff1d1e33),
@@ -23,9 +25,10 @@ class _ActivitiesState extends State<Activities> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Button1('Phi in A Pentagon', Colors.blueGrey[800], 'int'),
-              Button1('The Golden Sphiral', Colors.blueGrey[800], 'sphiral'),
-              Button1('Survey', Colors.blueGrey[800], 'survey'),
+              Button1('Phi in A Pentagon','int'),
+              Button1('The Golden Sphiral', 'sphiral'),
+              Button1('Magic Trick','trick'),
+              Button1('Survey', 'survey'),
             ],
           ),
         ),
@@ -35,10 +38,9 @@ class _ActivitiesState extends State<Activities> {
 }
 
 class Button1 extends StatelessWidget {
-  Button1(this.texts, this.colour, this.route);
+  Button1(this.texts, this.route);
 
   String texts;
-  Color colour;
   String route;
   @override
   Widget build(BuildContext context) {

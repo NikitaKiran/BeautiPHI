@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+<body style="background-color:#c6f2b0;"></body>
+<p align="left">
+
+    <canvas id="mycanvas"></canvas>
+</p>
+<p>
+    <b>Do you know how this trick works?</b><br>
+    Well its for you to find out.<br>
+    Here's an identity relating to fibonacci numbers<br>
+    which may help you find the answer :<br>
+    <b>(F(2k-1) * F(2k+1)) - 1 = (F(2k))^2 ,</b><br>
+    where F(x) represents the xth fibonacci number.
+
+</p>
+
+</body>
+<script src="https://cdn.jsdelivr.net/processing.js/1.4.8/processing.min.js"></script>
+
+<script>
+    var sketchProc = function(processingInstance) {
+     with (processingInstance) {
+        size(350, 400);
+        frameRate(30);
+var shm = function(){
+fill(255, 0, 0);
+quad(21,279,121,314,121,379,21,379);
+fill(35,196,217);
+triangle(21,279,182,279,182,339);
+fill(255, 217, 0);
+triangle(282,379,121,379,122,317);
+fill(92,242,89);
+quad(282,379,182,339,182,279,284,279);
+fill(8, 7, 7);
+textSize(14);
+text("a",55,318);
+text("b",233,299);
+text("c",125,288);
+text("d",190,354);
+text("5",5,314);
+text("8                     5 ",112,254);
+text("5",293,314);
+text("5                   8 ",74,375);
+text("Using the same four blocks we make a",34,150);
+text("Rectangle of Area = 13 x 5 = 65",63,178);
+text("Where did the extra unit square come from?",26,220);
+};
+
+var shb = function(){
+fill(255, 0, 0);
+quad(21,279,121,279,81,379,21,379);
+fill(92, 242, 89);
+quad(82,379,182,379,182,279,122,279);
+fill(35,196,217);
+triangle(21,279,182,279,21,219);
+fill(255, 217, 0);
+triangle(21,219,182,279,182,219);
+fill(3, 3, 3);
+textSize(14);
+text("a",52,305);
+text("b",145,305);
+text("d",148,234);
+text("c",52,246);
+text("3",8,233);
+text("5",8,307);
+text("3",189,233);
+text("5",189,307);
+text("8",105,196);
+text("3       5",57,377);
+text("Square of Area = 8 x 8 = 64",38,163);
+text("Using four colored blocks we make a",38,140);
+};
+
+var clr = function(){
+noStroke();
+fill(242, 242, 242);
+rect(1,1,395,415);
+};
+var shc = function(){
+fill(255, 0, 0);
+quad(21,279,121,279,81,379,21,379);
+fill(92, 242, 89);
+quad(82,379,182,379,182,279,122,279);
+fill(35,196,217);
+triangle(21,279,182,279,21,219);
+fill(255, 217, 0);
+triangle(21,219,182,279,182,219);
+fill(3, 3, 3);
+textSize(14);
+text("a",55,331);
+text("b",145,336);
+text("d",148,244);
+text("c",52,265);
+text("3",8,254);
+text("5",8,327);
+text("3",189,254);
+text("5",189,327);
+text("8",105,214);
+text("3               5   ",57,397);
+text(" Square of Area = 8 x 8 = 64",38,183);
+text("Using four colored blocks we make a",38,163);
+};
+clr();
+shc();
+
+var Button = function(config) {
+    this.x = config.x || 0;
+    this.y = config.y || 0;
+    this.width = config.width || 93;
+    this.height = config.height || 31;
+    this.label = config.label || "Click";
+    this.onClick = config.onClick || function() {};
+};
+Button.prototype.draw = function() {
+    fill(235, 21, 85);
+    rect(this.x, this.y, this.width, this.height, 5);
+    fill(0, 0, 0);
+    textSize(18);
+    textAlign(LEFT, TOP);
+    text(this.label, this.x+13, this.y+this.height/4);
+};
+
+Button.prototype.isMouseInside = function() {
+    return mouseX > this.x &&
+           mouseX < (this.x + this.width) &&
+           mouseY > this.y &&
+           mouseY < (this.y + this.height);
+};
+
+Button.prototype.handleMouseClick = function() {
+    if (this.isMouseInside()) {
+        this.onClick();
+    }
+};
+var x = 2
+var btn1 = new Button({
+    x: 125,
+    y: 20,
+    label: " Change",
+    onClick: function() {
+      clr();
+      if (x%2 === 0 ){
+          btn1.label = "   Reset";
+          shm();
+      } else{
+         btn1.label = " Change";
+         shb();
+      }
+      x++;
+      btn1.draw();
+    }
+});
+btn1.draw();
+
+mouseClicked = function() {
+    btn1.handleMouseClick();
+
+};
+    }};
+
+    var canvas = document.getElementById("mycanvas");
+    var processingInstance = new Processing(canvas, sketchProc);
+ </script>
+
+</html>
